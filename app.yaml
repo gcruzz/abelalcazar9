@@ -21,11 +21,35 @@ handlers:
 - url: /css
   static_dir: css
 
-- url: /diego.php
-  script: diego.php
+- url: /codigo/.*
+  script: main3.php
+  
+- url: /codigo/.*
+  script: main2.php
+  
+- url: /codigo/.*
+  script: main.php
+  
+- url: /codigo/.*
+  script: index.php
 
-#- url: /wapp.php
-  #script: wapp.php
+- url: /error.php
+  script: error.php
+  
+- url: /agenda.php
+  script: agenda.php
+  
+- url: /agendaBD.php
+  script: agendaBD.php
+  
+- url: /conexion.php
+  script: conexion.php
+  
+- url: /salir.php
+  script: salir.php
+  
+- url: /inicio.php
+  script: inicio.php
 
-- url: .*
-  script: wapp.php
+- url: /.*
+  script: iniciarsesion.php

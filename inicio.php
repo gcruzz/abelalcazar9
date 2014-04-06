@@ -6,7 +6,7 @@ $usuario = $_POST['usuario'];
 $pass = $_POST['pass'];
 //usa la funcion conexiones() que se ubica dentro de funciones.php
 if (conexiones($usuario, $pass)) {
-    header('Location: http://google.com/');
+    header('Location: /agenda.php');
 } else {
-    header('Location: /index.html');
+    header('Location: /error.php');
 }

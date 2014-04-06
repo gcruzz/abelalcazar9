@@ -40,7 +40,7 @@
         </div>
         <div class="row">
           <div class="span6 offset3">
-            <h4 class="widget-header"><i class="icon-lock"></i>Iniciar Sesión</h4>
+            <h4 class="widget-header"><i class="icon-lock"></i>&nbsp;Iniciar Sesión</h4>
             <div class="widget-body">
               <div class="center-align">
                 <form class="form-horizontal form-signin-signup" action="inicio.php" method="post">
