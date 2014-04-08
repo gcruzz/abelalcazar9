@@ -21,20 +21,11 @@ handlers:
 - url: /css
   static_dir: css
 
-- url: /codigo/.*
-  script: main3.php
-  
-- url: /codigo/.*
-  script: main2.php
-  
-- url: /codigo/.*
-  script: main.php
-  
-- url: /codigo/.*
-  script: index.php
-
 - url: /error.php
   script: error.php
+
+- url: /cgrilla.php
+  script: cgrilla.php
   
 - url: /agenda.php
   script: agenda.php

@@ -10,4 +10,3 @@ if (verificar_usuario()){
 	header ('Location:index.html');
 }
 ?>
-
