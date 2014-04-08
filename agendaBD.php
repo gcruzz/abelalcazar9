@@ -1,24 +1,26 @@
+<?php session_start(); ?>
 <html>
-<head>
-   <title>Agenda a BD</title>
-</head>
-<body>
+    <head>
+        <title>Agenda a BD</title>
+    </head>
+    <body>
 
-<?php
+        <?php
+        $enlace = mysql_connect("localhost", "root", "")
+                or die("No pudo conectarse : " . mysql_error());
+        mysql_select_db("bdagenda") or die("No pudo seleccionarse la BD.");
 
-$enlace = mysql_connect("localhost","root","")
-or die("No pudo conectarse : " . mysql_error());
-mysql_select_db("app") or die("No pudo seleccionarse la BD.");
+        $consulta = mysql_query("INSERT INTO tcontactos 
+                         VALUES (NULL,{$_SESSION['id_usuario']},'{$_POST['nombres']}','{$_POST['apellidos']}','{$_POST['direccion']}','{$_POST['empresa']}','{$_POST['telefono']}','{$_POST['movil']}','sdds')");
+        ?>
+        <br>
+        <script language="JavaScript" type="text/javascript">
 
-$consulta = mysql_query ("INSERT INTO contactos 
-                         VALUES ('$_REQUEST[nombre]','$_REQUEST[apellidos]','$_REQUEST[direccion]','$_REQUEST[empresa]','$_REQUEST[telefono]','$_REQUEST[movil]')");
-						 				
-?>
-<br>
-<?php
-header('Location: agenda.php');
-?>
+            var pagina = "http://localhost:8080/agenda.php";
+            location.href = pagina;
+
+        </script>
 
 
-</body>
+    </body>
 </html>
