@@ -18,12 +18,15 @@ session_start();
         <link href="css/font-awesome-ie7.css" rel="stylesheet" />
         <!-- Bootbusiness theme -->
         <link href="css/boot-business.css" rel="stylesheet" />
-        <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/boot-business.js"></script>
+        <link href="css/smoothness/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="js/jquery-ui-1.10.4.custom.js"></script>
         <script type="text/javascript">
 
             $(function() {
+                //alert("dkdkj");
                 actualizarGrilla();
             });
 
@@ -39,6 +42,7 @@ session_start();
                         {
                             alert("Contacto Creado Correctamente");
                             actualizarGrilla();
+                            clear();
                         }
                         else
                         {
@@ -53,7 +57,6 @@ session_start();
 
             function actualizarGrilla()
             {
-                //setTimeout(actualizarGrilla, 2000);
 
                 $.ajax({
                     url: 'cgrilla.php',
@@ -76,6 +79,104 @@ session_start();
                 $("#telefono").val("");
                 $("#movil").val("");
             }
+
+            function eliminarContacto()
+            {
+                $.ajax({
+                    url: 'cgrilla.php',
+                    type: 'post',
+                    data: "tipo=3&codigo=" + $("#codigo_borrar").val(),
+                    dataType: 'json',
+                    success: function(data) {
+                        alert("Eliminacion Correcta");
+                        actualizarGrilla();
+                    },
+                    error: function(e) {
+                        alert("Error al Eliminar");
+                        console.log('Ocurrió un error al actualizar la grilla: ' + e.statusText);
+                    }
+                });
+                return false;
+            }
+
+            function editarContacto()
+            {
+                $.ajax({
+                    url: 'cgrilla.php',
+                    type: 'post',
+                    data: "tipo=5&codigo=" + $("#codigo_borrar").val(),
+                    dataType: 'json',
+                    success: function(data) {
+                        $("#tnombres").val(data.nombres);
+                        $("#tapellidos").val(data.apellidos);
+                        $("#tdireccion").val(data.direccion);
+                        $("#ttelefono").val(data.telefono);
+                        $("#tempresa").val(data.empresa);
+                        $("#tcodigo").val(data.codigo);
+                        $("#tcelular").val(data.celular);
+
+                        /*alert($("#tnombres").val() +
+                                $("#tapellidos").val() +
+                                $("#tdireccion").val() +
+                                $("#ttelefono").val() +
+                                $("#tempresa").val() +
+                                $("#tcodigo").val() +
+                                $("#tcelular").val());*/
+
+                        dialogm();
+
+                    },
+                    error: function(e) {
+                        alert("Error al Eliminar");
+                        console.log('Ocurrió un error al actualizar la grilla: ' + e.statusText);
+                    }
+                });
+
+
+                return false;
+            }
+
+
+            function dialogm()
+            {
+                $("#dialog-editar-contacto").dialog({
+                    autoOpen: false,
+                    height: 450,
+                    width: 350,
+                    modal: true,
+                    buttons: {
+                        "Editar": function() {
+                            $.ajax({
+                                url: 'cgrilla.php',
+                                type: 'post',
+                                data: "tipo=4&codigo=" + $("#codigo_borrar").val() +
+                                        "&nombres=" + $("#tnombres").val()+
+                                        "&apellidos=" + $("#tapellidos").val() +
+                                        "&telefono=" + $("#ttelefono").val() +
+                                        "&direccion=" + $("#tdireccion").val() +
+                                        "&empresa=" + $("#tempresa").val() +
+                                        "&celular="+$("#tcelular").val(),
+                                success: function(data) {
+                                    $("#dialog-editar-contacto").dialog("close");
+                                    alert("Edicion Correcta");
+                                    actualizarGrilla();
+                                },
+                                error: function(e) {
+                                    alert("Error al Editar");
+                                    console.log('Ocurrió un error al actualizar la grilla: ' + e.statusText);
+                                }
+                            });
+                        },
+                        Cancel: function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                $("#dialog-editar-contacto").dialog("open");
+
+                return false;
+            }
+
         </script>
     </head>
     <body>
@@ -134,7 +235,7 @@ session_start();
 
                                             <tr>
                                                 <td><label for="movil" align="left" ><strong>Celular:</strong></label></td>
-                                                <td><input type="text" class="span3" id="movil" name="movil"  align="left" /></td>
+                                                <td><input type="text" style="background: white;" class="span3" id="movil" name="movil"  align="left" /></td>
                                             </tr>
 
                                             <tr>
@@ -165,6 +266,26 @@ session_start();
                 </airticle>
             </div>
 
+            <div id="dialog-editar-contacto" title="Editar Contacto" style="display: none;">
+                <form>
+                    <fieldset>
+                        <label for="tcodigo">Codigo</label>
+                        <input type="text" name="tcodigo" enabled="true" id="tcodigo" class="text ui-widget-content ui-corner-all" />
+                        <label for="tcodigo">Nombres</label>
+                        <input type="text" name="tnombres" enabled="true" id="tnombres" class="text ui-widget-content ui-corner-all" />
+                        <label for="tcodigo">Apellidos</label>
+                        <input type="text" name="tapellidos" enabled="true" id="tapellidos" class="text ui-widget-content ui-corner-all" />
+                        <label for="tcodigo">Direccion</label>
+                        <input type="text" name="tdireccion" enabled="true" id="tdireccion" class="text ui-widget-content ui-corner-all" />
+                        <label for="tcodigo">Empresa</label>
+                        <input type="text" name="tempresa" enabled="true" id="tempresa" class="text ui-widget-content ui-corner-all" />
+                        <label for="ttelefono">Telefono</label>
+                        <input type="text" name="ttelefono" enabled="true" id="ttelefono" class="text ui-widget-content ui-corner-all" />
+                        <label for="tcelular">Celular</label>
+                        <input type="text" name="tcelular" enabled="true" id="tcelular" class="text ui-widget-content ui-corner-all" />
+                    </fieldset>
+                </form>
+            </div>
             <footer>
                 <div class="container">
                     <p>
